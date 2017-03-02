@@ -8,7 +8,6 @@
   <xacro:include filename="$(find vito_description)/model/materials.urdf"/>
   <xacro:include filename="$(find lwr_description)/model/kuka_lwr.urdf.xacro"/>
   <xacro:include filename="$(find soft_hand_description)/model/soft_hand.urdf.xacro"/>
-  <xacro:include filename="$(find kit_head_description)/model/kit_head.urdf.xacro"/>
     
   <link name="vito_anchor" />
   
@@ -23,14 +22,14 @@
   </xacro:model_table>
 
   <!-- WORKBENCH -->
-  <xacro:model_table name="workbench"
+<!--   <xacro:model_table name="workbench"
                     parent="vito_anchor"
                     length="0.725"
                     width="1.25"
                     height="0.960"
                     plate_thickness="0.1">
   <origin xyz="-1.25 0.625 0.07" rpy="0 0 0"/>
-  </xacro:model_table>
+  </xacro:model_table> -->
 
   <!-- TORSO -->
   <xacro:model_torso name="torso" parent="vito_anchor">
@@ -57,9 +56,5 @@
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </xacro:soft_hand>
 
-  <!-- HEAD -->
-  <xacro:kit_head name="head" parent="vito_anchor">
-    <origin xyz="0.0 0.0 ${0.55 + 0.1}" rpy="0.0 0.0 3.141592"/>
-  </xacro:kit_head>
 
 </robot>

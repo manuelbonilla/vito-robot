@@ -131,7 +131,7 @@
 
         <!-- load the controllers in current namespace -->
         <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller stiffness_trajectory_controller damping_trajectory_controller add_torque_trajectory_controller"/>
-        <node name="controller_stopper" pkg="controller_manager" type="spawner" args="--stopped joint_impedance_controller" />
+        <node name="controller_stopper" pkg="controller_manager" type="spawner" args="--stopped joint_impedance_controller teleoperation_controller_mt_effort" />
     </group>
     
     <group ns="left_hand">
@@ -173,7 +173,7 @@
 
         <!-- load the controllers in current namespace -->
         <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller stiffness_trajectory_controller damping_trajectory_controller add_torque_trajectory_controller"/>
-        <node name="controller_stopper" pkg="controller_manager" type="spawner" args="--stopped joint_impedance_controller" />
+        <node name="controller_stopper" pkg="controller_manager" type="spawner" args="--stopped joint_impedance_controller teleoperation_controller_mt_effort"/>
     </group>
 
     <group ns="right_hand">

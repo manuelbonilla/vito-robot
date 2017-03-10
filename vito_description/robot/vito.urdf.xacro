@@ -9,7 +9,15 @@
   <xacro:include filename="$(find lwr_description)/model/kuka_lwr.urdf.xacro"/>
   <xacro:include filename="$(find soft_hand_description)/model/soft_hand.urdf.xacro"/>
     
+  <link name="world" />
   <link name="vito_anchor" />
+
+    <joint name="w_fixed" type="fixed">
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <parent link="world" />
+      <child link="vito_anchor" />
+    </joint>
+
   
   <!-- BODY -->
   <xacro:model_table name="table" 
@@ -29,32 +37,75 @@
                     height="0.960"
                     plate_thickness="0.1">
   <origin xyz="-1.25 0.625 0.07" rpy="0 0 0"/>
-  </xacro:model_table> -->
-
+  </xacro:model_table>
+ -->
   <!-- TORSO -->
   <xacro:model_torso name="torso" parent="vito_anchor">
     <origin xyz="0 0 0"/>
   </xacro:model_torso>
   
   <!-- LEFT ARM -->
-  <xacro:kuka_lwr name="left_arm" parent="vito_anchor">
+<!--   <xacro:kuka_lwr name="left_arm" parent="vito_anchor">
     <origin xyz="-0.165 -0.1085854 0.390" rpy="1.5707963267948966 0.5235987010713441 -0.5235990737060282"/>
-  </xacro:kuka_lwr>
+  </xacro:kuka_lwr> -->
 
   <!-- LEFT SOFTHAND -->
-  <xacro:soft_hand parent="left_arm_7_link" name="left_hand" left="true" withAdaptiveTransmission="true" useMimicTag="$(arg use_mimic_tag)">
+<!--   <xacro:soft_hand parent="left_arm_7_link" name="left_hand" left="true" withAdaptiveTransmission="true" useMimicTag="$(arg use_mimic_tag)">
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </xacro:soft_hand>
-
+ -->
   <!-- RIGHT ARM -->
   <xacro:kuka_lwr name="right_arm" parent="vito_anchor">
-    <origin xyz="-0.165 0.10858 0.390" rpy="-1.5707963267948966 0.5235987010713441 0.5235990737060282"/>
+    <origin xyz="-0.165 0.10858 0.390" rpy="-1.5707963267948966 -0.5235987010713441 0.5235990737060282"/>
   </xacro:kuka_lwr>
 
   <!-- RIGHT SOFTHAND -->
   <xacro:soft_hand parent="right_arm_7_link" name="right_hand" left="false" withAdaptiveTransmission="true" useMimicTag="$(arg use_mimic_tag)">
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0 0 0.0" rpy="0 0 0"/>
   </xacro:soft_hand>
 
+
+  <link name="ft_surface">
+      <inertial>
+        <xacro:insert_block name="negligible_inertia"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0.02" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.001" />
+        </geometry>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 0.02" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.001" />
+        </geometry>
+      </collision>
+
+  </link>
+  
+  <joint name="ft_joint_sensor" type="fixed">
+    <origin xyz="0.030 0.000 0.192" rpy="0.0 0.0 0.0"/>
+    <parent link="right_arm_7_link" />
+    <child link="ft_surface" />
+  </joint>
+  <gazebo reference="ft_surface">
+    <gravity>true</gravity>
+  </gazebo>
+
+
+    <gazebo>
+      <plugin name="force_sensor" filename="libgazebo_ros_ft_sensor.so">
+        <updateRate>100.0</updateRate>
+        <topicName>ft_sensor_topic</topicName>
+        <jointName>ft_joint_sensor</jointName>
+      </plugin>
+    </gazebo>
+
+    <gazebo reference="ft_joint_sensor">
+      <provideFeedback>true</provideFeedback>
+      <disableFixedJointLumping>true</disableFixedJointLumping>
+    </gazebo>
 
 </robot>

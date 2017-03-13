@@ -30,7 +30,7 @@
   </xacro:model_table>
 
   <!-- WORKBENCH -->
-<!--   <xacro:model_table name="workbench"
+  <xacro:model_table name="workbench"
                     parent="vito_anchor"
                     length="0.725"
                     width="1.25"
@@ -38,16 +38,16 @@
                     plate_thickness="0.1">
   <origin xyz="-1.25 0.625 0.07" rpy="0 0 0"/>
   </xacro:model_table>
- -->
+
   <!-- TORSO -->
   <xacro:model_torso name="torso" parent="vito_anchor">
     <origin xyz="0 0 0"/>
   </xacro:model_torso>
   
   <!-- LEFT ARM -->
-<!--   <xacro:kuka_lwr name="left_arm" parent="vito_anchor">
+  <xacro:kuka_lwr name="left_arm" parent="vito_anchor">
     <origin xyz="-0.165 -0.1085854 0.390" rpy="1.5707963267948966 0.5235987010713441 -0.5235990737060282"/>
-  </xacro:kuka_lwr> -->
+  </xacro:kuka_lwr>
 
   <!-- LEFT SOFTHAND -->
 <!--   <xacro:soft_hand parent="left_arm_7_link" name="left_hand" left="true" withAdaptiveTransmission="true" useMimicTag="$(arg use_mimic_tag)">
@@ -60,12 +60,12 @@
   </xacro:kuka_lwr>
 
   <!-- RIGHT SOFTHAND -->
-  <xacro:soft_hand parent="right_arm_7_link" name="right_hand" left="false" withAdaptiveTransmission="true" useMimicTag="$(arg use_mimic_tag)">
+<!--   <xacro:soft_hand parent="right_arm_7_link" name="right_hand" left="false" withAdaptiveTransmission="true" useMimicTag="$(arg use_mimic_tag)">
     <origin xyz="0 0 0.0" rpy="0 0 0"/>
   </xacro:soft_hand>
+ -->
 
-
-  <link name="ft_surface">
+<!--   <link name="ft_surface">
       <inertial>
         <xacro:insert_block name="negligible_inertia"/>
       </inertial>
@@ -107,5 +107,5 @@
       <provideFeedback>true</provideFeedback>
       <disableFixedJointLumping>true</disableFixedJointLumping>
     </gazebo>
-
+ -->
 </robot>

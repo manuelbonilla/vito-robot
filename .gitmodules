@@ -1,0 +1,6 @@
+[submodule "pisa-iit-soft-hand"]
+	path = pisa-iit-soft-hand
+	url = https://github.com/manuelbonilla/pisa-iit-soft-hand.git
+[submodule "kuka-lwr"]
+	path = kuka-lwr
+	url = https://github.com/manuelbonilla/kuka-lwr.git

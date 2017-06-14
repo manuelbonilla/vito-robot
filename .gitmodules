@@ -4,3 +4,6 @@
 [submodule "kuka-lwr"]
 	path = kuka-lwr
 	url = https://github.com/manuelbonilla/kuka-lwr.git
+[submodule "myo_kuka"]
+	path = myo_kuka
+	url = https://github.com/manuelbonilla/myo_kuka.git

@@ -26,3 +26,8 @@
 *.exe
 *.out
 *.app
+
+# KDevelop stuff
+.kdev4/*
+vito_description/.kdev4/*
+vito_description/*.kdev4

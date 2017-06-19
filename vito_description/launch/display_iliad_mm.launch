@@ -25,6 +25,7 @@
 
     <!-- load the full robot in robot_description, useful for visualization, collision detection and planning simultaneously -->
     <!-- the selection is only due to the hand visualization which is different in real and simulation -->
+
     <group if="$(arg use_robot_sim)">
         <param name="robot_description" command="$(find xacro)/xacro --inorder $(find vito_description)/robot/$(arg robot_name).urdf.xacro use_mimic_tag:=false"/>
     </group>
@@ -41,9 +42,8 @@
     </group>
 
     <param name="publish_frequency" value="100"/>
-    <group ns="robot1">
-	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"  />
-    </group>
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" >
+	</node>
     
     <group if="$(arg use_rviz)">
         <node name="rviz" pkg="rviz" type="rviz" respawn="false" args="-d $(find cititruck_description)/launch/cititruck.rviz" output="screen"/>
@@ -139,10 +139,12 @@
                 <arg name="use_deafult_joint_names" value="false"/>
                 <arg name="hand_id" value="21"/>
             </include>
+	    
+	            <!-- load the controllers in current namespace -->
+        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
         </group>
 
-        <!-- load the controllers in current namespace -->
-        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="joint_state_controller joint_trajectory_controller"/>
+
 
         <!-- grasp estimator -->
         <group if="$(arg use_grasp_estimator)">
@@ -174,24 +176,27 @@
 
 
     <!-- LOAD THE NAVIGATION ENVIRONMENT FROM navigation-oru -->
-      <rosparam command="load" file="$(find orunav_params)/config/global.cfg"/>
-  <rosparam command="load" file="$(find orunav_params)/config/citi1_simulation.cfg" />
+    <rosparam command="load" file="$(find orunav_params)/config/global.cfg"/>
+    <rosparam command="load" file="$(find orunav_params)/config/citi1_simulation.cfg" />
   
+
     <include file="$(find gazebo_worlds_oru)/launch/basement_map_server.launch"/>
     
-      <!--<include file="$(find gazebo_worlds_oru)/launch/basement_world_paused.launch"/>-->
-      
-     <node pkg="orunav_vehicle_execution" type="point_n_click_target_client" name="point_n_click_target_client_citi1" output="screen">
-    <param name="load_operation" value="false" />
-    <rosparam param="robot_ids">[1]</rosparam>
-    <param name="multiple_vehicles" value="true" />
-  </node>
+    <!--<include file="$(find gazebo_worlds_oru)/launch/basement_world_paused.launch"/>-->
+    
+    <node pkg="orunav_vehicle_execution" type="point_n_click_target_client" name="point_n_click_target_client_citi1" output="screen">
+	<param name="load_operation" value="false" />
+	<rosparam param="robot_ids">[1]</rosparam>
+	<param name="multiple_vehicles" value="true" />
+    </node>
+    
+    <node pkg="orunav_coordinator_fake" type="coordinator_fake_node" name="coordinator_fake_node" output="screen">
+	<param name="multiple_vehicles" value="true" />
+	<param name="use_ct" value="false" />  
+	</node>
 
-  <node pkg="orunav_coordinator_fake" type="coordinator_fake_node" name="coordinator_fake_node" output="screen">
-    <param name="multiple_vehicles" value="true" />
-    <param name="use_ct" value="false" />  
-  </node>
-<!-- ALL ROBOT SPECIFIC TASKS -->
+	
+    <!-- ALL ROBOT SPECIFIC TASKS -->
 
   <group ns="robot1">
   <param name="tf_prefix" value="robot1" />

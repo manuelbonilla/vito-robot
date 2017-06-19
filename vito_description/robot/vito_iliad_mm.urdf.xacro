@@ -9,11 +9,13 @@
   <xacro:include filename="$(find lwr_description)/model/kuka_lwr.urdf.xacro"/>
   <xacro:include filename="$(find soft_hand_description)/model/soft_hand.urdf.xacro"/>
   <!-- LOAD MOBILE BASE URDF FROM ros-kinetic-navigation-oru package -->
-  <xacro:include filename="$(find cititruck_description)/urdf/cititruck.xacro"/>
-    
+<!--  <xacro:include filename="$(find cititruck_description)/urdf/cititruck.xacro"/>-->
+  <xacro:include filename="$(find vito_description)/model/cititruck.xacro"/>
   
   <link name="vito_anchor" />
 
+  <xacro:cititruck></xacro:cititruck>
+  
     <joint name="w_fixed" type="fixed">
       <origin xyz="0.75 0.0 0.77" rpy="0 0 0"/>
       <parent link="base_link" />

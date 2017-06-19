@@ -46,9 +46,11 @@
     </group>
     
     <group if="$(arg use_rviz)">
-        <node name="rviz" pkg="rviz" type="rviz" respawn="false" args="-d $(find vito_description)/launch/rviz_config_orunav.rviz" output="screen"/>
+        <node name="rviz" pkg="rviz" type="rviz" respawn="false" args="-d $(find cititruck_description)/launch/cititruck.rviz" output="screen"/>
 	<!-- The cititruck rviz config cannot see the tf correctly -->
-	<!-- -d $(find cititruck_description)/launch/cititruck.rviz -->
+	<!-- -d $(find cititruck_description)/launch/cititruck.rviz
+	-d $(find vito_description)/launch/rviz_config_orunav.rviz
+	-->
     </group>
 
     <!-- load hardware interface and controller configurations -->
